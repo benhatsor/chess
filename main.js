@@ -14,31 +14,31 @@ function greySquare(square) {
   var square = document.querySelector('#myBoard .square-' + square);
 
   var background = whiteSquareGrey;
-  if (square.classList.contains('black-3c85d')) {
+  if (square.classList.contains('black-b7cb6')) {
     background = blackSquareGrey;
   }
 
   square.style.background = background;
 }
 
-function onDragStart(source, piece) {
+function onDragStart(e) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false;
 
   // or if it's not that side's turn
-  if ((game.turn() === 'w' && piece.startsWith('b')) ||
-    (game.turn() === 'b' && piece.startsWith('w'))) {
+  if ((game.turn() === 'w' && e.piece.startsWith('b')) ||
+    (game.turn() === 'b' && e.piece.startsWith('w'))) {
     return false;
   }
 }
 
-function onDrop(source, target) {
+function onDrop(e) {
   removeGreySquares();
-
+  
   // see if the move is legal
   var move = game.move({
-    from: source,
-    to: target,
+    from: e.source,
+    to: e.target,
     promotion: 'q' // NOTE: always promote to a queen for example simplicity
   });
 
@@ -83,4 +83,4 @@ var config = {
   onSnapEnd: onSnapEnd
 };
 
-board = Chessboard('myBoard', config);
+board = Chessboard2('myBoard', config);
